@@ -43,7 +43,7 @@ if __name__ == '__main__':
     args.result_dir = './model_ppo_2cv_lot'
 
     runner = Runner(env, args, dict_grid)
-    runner.agents.policy.load_model('221')
+    runner.agents.policy.load_model('7')
 
     if args.learn:
         runner.run()

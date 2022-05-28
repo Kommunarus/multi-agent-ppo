@@ -1,7 +1,7 @@
 from runner import Runner
 import gym
 from pogema import GridConfig
-from pogema.animation import AnimationMonitor
+from pogema.animation import AnimationMonitor, MultiTimeLimit
 # from smac.env import StarCraft2Env
 from common.arguments import get_mixer_args, get_common_args
 import os
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     args = get_mixer_args(args)
 
     num_agents = 6
-    size = 30
+    size = 16
     max_episode_steps = 256
     density = 0.3
     seed = None
@@ -28,6 +28,7 @@ if __name__ == '__main__':
     }
     grid_config = GridConfig(**dict_grid)
     env = gym.make("Pogema-v0", grid_config=grid_config)
+    env = MultiTimeLimit(env, max_episode_steps=12)
     env = AnimationMonitor(env)
     env.reset()
 

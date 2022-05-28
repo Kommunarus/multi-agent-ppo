@@ -46,17 +46,18 @@ class Agents:
         action_prob = torch.nn.functional.softmax(policy_q_value.cpu(), dim=-1)
         prep = obs[0] + obs[1]
         if prep[centr[0]-1, centr[1]] == 1:
-            action_prob[0, 1] = 0
+            action_prob[0, 1] = 0.01
         if prep[centr[0]+1, centr[1]] == 1:
-            action_prob[0, 2] = 0
+            action_prob[0, 2] = 0.01
         if prep[centr[0], centr[1]-1] == 1:
-            action_prob[0, 3] = 0
+            action_prob[0, 3] = 0.01
         if prep[centr[0], centr[1]+1] == 1:
-            action_prob[0, 4] = 0
-        action_prob[0, 0] = 0
+            action_prob[0, 4] = 0.01
+        action_prob[0, 0] = 0.01
         # action_prob[avail_actions == 0.0] = 0.0
         if evaluate:
-            action = torch.argmax(action_prob)
+            # action = torch.argmax(action_prob)
+            action = Categorical(action_prob).sample().long()
         else:
             if random.random() < 0.1:
                 action = torch.randint(0, 5, (1,)).long()

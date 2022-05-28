@@ -122,7 +122,8 @@ class RolloutWorker:
         last_action = np.zeros((self.args.n_agents, self.args.n_actions))
         self.agents.policy.init_hidden(1)
 
-
+        n_step = 1
+        # self.env.save_animation('./renders/out-static.svg', egocentric_idx=None)
         while not terminated:
             self.env.render()
             # self.env.save_animation('out/temp.svg', egocentric_idx=None)
@@ -144,15 +145,18 @@ class RolloutWorker:
                 last_action[agent_id] = action_onehot
 
             act_for_env = [x.item() for x in actions]
+
             n_obs, reward, done, info = self.env.step(act_for_env)
-            print(act_for_env, reward)
+            # print(act_for_env, reward)
 
             score += sum(reward)
             terminated = all(done)
 
             state = n_obs
+            n_step += 1
 
         # out_file.release()
+        # self.env.save_animation('./renders/out.svg', egocentric_idx=None)
 
 
         return score
