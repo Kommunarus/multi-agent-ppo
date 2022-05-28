@@ -37,7 +37,7 @@ class Model:
 
     def __init__(self):
         self.agents = Agents(args)
-        self.agents.policy.load_model('7')
+        self.agents.policy.load_model('1')
         self.agents.policy.init_hidden(1)
 
         self.last_action = np.zeros((200, 5))
